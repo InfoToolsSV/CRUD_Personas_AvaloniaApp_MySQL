@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:viewModels="clr-namespace:PersonaApp.ViewModels"
+             x:DataType="viewModels:PersonaViewModel"
+             x:Class="PersonaApp.Views.PersonaView">
+    <UserControl.DataContext>
+        <viewModels:PersonaViewModel />
+    </UserControl.DataContext>
+    <Border Padding="30" Margin="20">
+        <StackPanel Spacing="25">
+            <TextBlock Text="CRUD de Personas"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center" />
+            <Grid ColumnDefinitions="Auto, *"
+                  RowDefinitions="Auto, Auto, Auto, Auto"
+                  ColumnSpacing="15"
+                  RowSpacing="15">
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Nombre:"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         Watermark="Ingrese su nombre"
+                         Text="{Binding Nombre, Mode=TwoWay}">
+                </TextBox>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Fecha de nacimiento:"></TextBlock>
+                <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding FechaNacimiento, Mode=TwoWay}"></DatePicker>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Genero:"></TextBlock>
+                <ComboBox Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Genero, Mode=TwoWay}">
+                    <x:String>Masculino</x:String>
+                    <x:String>Femenino</x:String>
+                    <x:String>Otro</x:String>
+                </ComboBox>
+                <CheckBox Grid.Row="3" Grid.ColumnSpan="2" Content="Acepta lo terminos y condiciones"
+                          IsChecked="{Binding AceptaTerminos, Mode=TwoWay}"></CheckBox>
+            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
+                <Button Content="Agregar" Width="130" Command="{Binding AgregarCommand}"></Button>
+                <Button Content="Actualizar" Width="130" Command="{Binding ActualizarCommand}"></Button>
+                <Button Content="Eliminar" Width="130" Command="{Binding EliminarCommand}"></Button>
+                <Button Content="Limpiar" Width="130" Command="{Binding LimpiarCommand}"></Button>
+            </StackPanel>
+            <TextBlock Text="Lista de personas:" FontWeight="Bold" Margin="0, 10, 0, 0" FontSize="18"></TextBlock>
+            
+            <ListBox ItemsSource="{Binding Personas}" SelectedItem="{Binding PersonaSeleccionada}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Nombre}" Padding="8" FontSize="14"></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Border>
+
+</UserControl>
